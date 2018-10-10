@@ -1,14 +1,21 @@
 public class Grid extends AbstractGrid{
 
+    private int width;
+    private int height;
+
+    Grid(int width, int height){
+        this.width = width;
+        this.height = height;
+    }
 
     @Override
     public int getWidth() {
-        return 0;
+        return this.width;
     }
 
     @Override
     public int getHeight() {
-        return 0;
+        return this.height;
     }
 
     @Override
