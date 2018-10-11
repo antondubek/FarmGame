@@ -72,8 +72,8 @@ public class Grid extends AbstractGrid{
     public void processItems(TimeStep timeStep) {
 
         //For farmers
-        for (int y = 0; y < grid.length; y++) {
-            for (int x = 0; x < grid[y].length; x++) {
+        for (int y = getHeight() - 1; y >= 0; y--) {
+            for (int x = 0; x < getWidth(); x++) {
                 //if item is an item and a radish farmer
                 AbstractItem farmerItem = getItem(x,y);
                 if((farmerItem != null) && ((farmerItem instanceof RadishFarmer) || (farmerItem instanceof  CornFarmer))){
@@ -83,8 +83,8 @@ public class Grid extends AbstractGrid{
         }
 
         //For transporters
-        for (int y = 0; y < grid.length; y++) {
-            for (int x = 0; x < grid[y].length; x++) {
+        for (int y = getHeight() - 1; y >= 0; y--) {
+            for (int x = 0; x < getWidth(); x++) {
                 //if item is an item is a transporter
                 AbstractItem transporterItem = getItem(x,y);
                 if((transporterItem != null) && ((transporterItem instanceof VerticalTransporter) || (transporterItem instanceof  HorizontalTransporter))){
@@ -94,8 +94,8 @@ public class Grid extends AbstractGrid{
         }
 
         //For consumers
-        for (int y = 0; y < grid.length; y++) {
-            for (int x = 0; x < grid[y].length; x++) {
+        for (int y = getHeight() - 1; y >= 0; y--) {
+            for (int x = 0; x < getWidth(); x++) {
                 //if item is an item and a consumer
                 AbstractItem consumerItem = getItem(x,y);
                 if((consumerItem != null) && ((consumerItem instanceof Rabbit) || (consumerItem instanceof  Beaver))) {
