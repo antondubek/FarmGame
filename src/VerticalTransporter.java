@@ -29,8 +29,8 @@ public class VerticalTransporter extends AbstractItem {
 
         // do the same again to find a consumer
         AbstractItem consumer = null;
-        for(int x2 = 0; x2 < grid.getHeight(); x2++){
-            AbstractItem item2 = grid.getItem(x2,yCoordinate);
+        for(int x = 0; x < grid.getHeight(); x++){
+            AbstractItem item2 = grid.getItem(x,yCoordinate);
             if((item2 instanceof Rabbit) || (item2 instanceof Beaver)){
                 consumer = item2;
             }

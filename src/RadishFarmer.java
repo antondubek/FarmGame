@@ -13,7 +13,6 @@ public class RadishFarmer extends AbstractItem {
     @Override
     public String toString() {
         return "Radish("+getStock()+")";
-        //return "RadishFarmer";
     }
 
     @Override
@@ -49,7 +48,6 @@ public class RadishFarmer extends AbstractItem {
     @Override
     protected void reduceStock(int nutrition) {
         //Reduece stock at the items location
-        System.out.println("DEBUG: Reduce stock = "+nutrition);
         this.grid.reduceStockAt(this.xCoordinate, this.yCoordinate, nutrition);
     }
 }
