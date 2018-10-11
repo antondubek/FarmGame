@@ -10,7 +10,7 @@ public class CornFarmer extends AbstractItem {
 
     @Override
     public String toString() {
-        return "CornFarmer("+getStock()+")";
+        return "Corn("+getStock()+")";
     }
 
     @Override
