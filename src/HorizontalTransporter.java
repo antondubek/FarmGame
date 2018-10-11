@@ -1,4 +1,11 @@
 public class HorizontalTransporter extends AbstractItem {
+
+    public HorizontalTransporter(Grid grid, int xCoordinate, int yCoordinate){
+        this.grid = grid;
+        this.xCoordinate = xCoordinate;
+        this.yCoordinate = yCoordinate;
+    }
+
     @Override
     public void process(TimeStep timeStep) {
 
