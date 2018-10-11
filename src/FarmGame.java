@@ -3,7 +3,6 @@ public class FarmGame {
         Grid grid = new Grid(9, 9);
         new CornFarmer(grid, 0, 0);
         new RadishFarmer(grid, 4, 4);
-        new RadishFarmer(grid, 8, 0);
         new Rabbit(grid, 0, 4);
         new Beaver(grid, 4, 0);
         new HorizontalTransporter(grid, 0, 2, 10);

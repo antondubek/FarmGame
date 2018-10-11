@@ -5,7 +5,7 @@ public class Grid extends AbstractGrid{
     private int totalProduction;
     private int totalConsumption;
 
-    Grid(int width, int height){
+    Grid(int height, int width){
         this.width = width;
         this.height = height;
         grid = new AbstractItem[width][height];
