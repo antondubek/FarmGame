@@ -19,8 +19,6 @@ public class Rabbit extends AbstractItem {
         //Get the initial stock level
         int stockLevel = getStock();
 
-        System.out.println("StockLevel = " + stockLevel);
-
         // If there is 8 units or more
         if((stockLevel) >= 8){
             // Eat 8 nutrition
