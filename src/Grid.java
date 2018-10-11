@@ -26,8 +26,6 @@ public class Grid extends AbstractGrid{
     public void registerItem(int xCoordinate, int yCoordinate, AbstractItem item) {
         // Put the item into the location on the grid
         grid[xCoordinate][yCoordinate] = item;
-        System.out.println("DEBUG: registerItem");
-        System.out.println("DEBUG: Item at x,y = " +grid[xCoordinate][yCoordinate]);
     }
 
     @Override
@@ -56,8 +54,7 @@ public class Grid extends AbstractGrid{
     @Override
     public void addToStockAt(int xCoordinate, int yCoordinate, int nutrition) {
         // Increments the stock at a location
-        int currentStock = getStockAt(xCoordinate, yCoordinate);
-        setStockAt(xCoordinate,yCoordinate, currentStock += nutrition);
+        setStockAt(xCoordinate,yCoordinate, (getStockAt(xCoordinate, yCoordinate)+ nutrition));
     }
 
     @Override

@@ -6,7 +6,6 @@ public class RadishFarmer extends AbstractItem {
         this.yCoordinate = yCoordinate;
         this.grid = grid;
 
-        System.out.println("DEBUG: Radish Farmer Constructor");
         grid.registerItem(xCoordinate, yCoordinate, this);
 
     }
@@ -31,26 +30,22 @@ public class RadishFarmer extends AbstractItem {
             System.out.println("DEBUG: Creating something");
             // Remember to pass nutrition value not num of radishes
             addToStock(10);
+
+            //Update total production
+            grid.recordProduction(10);
         }
     }
 
     @Override
     protected int getStock() {
         // Retrieve the amount of stock at this location
-        int stock = this.grid.getStockAt(this.xCoordinate, this.yCoordinate);
-
-        //System.out.println("DEBUG: Amount of stock at location = " + stock);
-        return stock;
+        return this.grid.getStockAt(this.xCoordinate, this.yCoordinate);
     }
 
     @Override
     protected void addToStock(int nutrition) {
         //Add to stock at this farmers location
-        System.out.println("DEBUG: Stock to add = " + nutrition);
         this.grid.addToStockAt(this.xCoordinate, this.yCoordinate, nutrition);
-
-        //Update total production
-        grid.recordProduction(nutrition);
     }
 
     @Override
