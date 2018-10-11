@@ -1,4 +1,3 @@
-import java.sql.SQLOutput;
 
 public class RadishFarmer extends AbstractItem {
 
@@ -6,11 +5,16 @@ public class RadishFarmer extends AbstractItem {
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
         this.grid = grid;
+
+        System.out.println("DEBUG: Radish Farmer Constructor");
+        grid.registerItem(xCoordinate, yCoordinate, this);
+
     }
 
     @Override
     public String toString() {
-        return "RadishFarmer("+getStock()+")";
+        return "Radish("+getStock()+")";
+        //return "RadishFarmer";
     }
 
     @Override
@@ -25,7 +29,8 @@ public class RadishFarmer extends AbstractItem {
 
             //Produce some food
             System.out.println("DEBUG: Creating something");
-            //addToStock(10);
+            // Remember to pass nutrition value not num of radishes
+            addToStock(10);
         }
     }
 
@@ -34,7 +39,7 @@ public class RadishFarmer extends AbstractItem {
         // Retrieve the amount of stock at this location
         int stock = this.grid.getStockAt(this.xCoordinate, this.yCoordinate);
 
-        System.out.println("DEBUG: Amount of stock at location = " + stock);
+        //System.out.println("DEBUG: Amount of stock at location = " + stock);
         return stock;
     }
 
@@ -43,6 +48,9 @@ public class RadishFarmer extends AbstractItem {
         //Add to stock at this farmers location
         System.out.println("DEBUG: Stock to add = " + nutrition);
         this.grid.addToStockAt(this.xCoordinate, this.yCoordinate, nutrition);
+
+        //Update total production
+        grid.recordProduction(nutrition);
     }
 
     @Override

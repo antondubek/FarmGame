@@ -17,7 +17,10 @@ public class Game {
         TimeStep t = new TimeStep();
 
         for (int i = 0; i < timeSteps; i++) {
+            System.out.println("DEBUG Process Items");
             grid.processItems(t);
+
+            System.out.println("DEBUG Display");
             grid.display();
 
             System.out.println("Time step: " + t.getValue());
