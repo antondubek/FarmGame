@@ -31,38 +31,55 @@ public class Grid extends AbstractGrid{
     @Override
     public AbstractItem getItem(int xCoordinate, int yCoordinate) {
         // Check if there is an item at location, if T return, else null
-
-        return null;
+        if (grid[xCoordinate][yCoordinate] instanceof AbstractItem){
+            return grid[xCoordinate][yCoordinate];
+        } else {
+            return null;
+        }
     }
 
     @Override
     public int getStockAt(int xCoordinate, int yCoordinate) {
-        return 0;
+        //. Returns amount of stock at a location
+        return stock[xCoordinate][yCoordinate];
     }
 
     @Override
     public void emptyStockAt(int xCoordinate, int yCoordinate) {
-
+        //Set the stock at location to 0
+        setStockAt(xCoordinate, yCoordinate, 0);
     }
 
     @Override
     public void addToStockAt(int xCoordinate, int yCoordinate, int nutrition) {
-
+        // Increments the stock at a location
+        int currentStock = getStockAt(xCoordinate, yCoordinate);
+        setStockAt(xCoordinate,yCoordinate, currentStock += nutrition);
     }
 
     @Override
     public void reduceStockAt(int xCoordinate, int yCoordinate, int nutrition) {
-
+        int currentStock = getStockAt(xCoordinate, yCoordinate);
+        setStockAt(xCoordinate, yCoordinate, currentStock -= nutrition);
     }
 
     @Override
     public void setStockAt(int xCoordinate, int yCoordinate, int nutrition) {
-
+        stock[xCoordinate][yCoordinate] = nutrition;
     }
 
     @Override
     public void processItems(TimeStep timeStep) {
 
+        //For farmers
+        for(int y=0; y<grid.length; y++){
+            for(int x=0; x<grid[y].length; x++) {
+                // if the item is an item and is a farmer
+                if(getItem(x,y) != null && getItem(x,y) instanceof RadishFarmer){
+                    //process it
+                }
+            }
+        }
     }
 
     @Override

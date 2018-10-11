@@ -9,6 +9,11 @@ public class RadishFarmer extends AbstractItem {
     }
 
     @Override
+    public String toString() {
+        return "RadishFarmer("+getStock()+")";
+    }
+
+    @Override
     public void process(TimeStep timeStep) {
         System.out.println("DEBUG: Timestep = " + timeStep);
 
