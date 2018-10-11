@@ -27,9 +27,7 @@ public class Rabbit extends AbstractItem {
             // Else eat whatever is there
             grid.recordConsumption(stockLevel);
         }
-
-
-        reduceStock(0);
+        reduceStock(stockLevel);
     }
 
     @Override
@@ -40,12 +38,13 @@ public class Rabbit extends AbstractItem {
 
     @Override
     protected void addToStock(int nutrition) {
-        // Rabbit does not have any stock so does not need this
+        //Add to stock at this farmers location
+        this.grid.addToStockAt(this.xCoordinate, this.yCoordinate, nutrition);
     }
 
     @Override
     protected void reduceStock(int nutrition) {
         // Rabbit has no stock so stock reduced to 0 when finished consuming
-        grid.emptyStockAt(xCoordinate, yCoordinate);
+        this.grid.reduceStockAt(xCoordinate, yCoordinate, nutrition);
     }
 }

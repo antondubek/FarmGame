@@ -18,7 +18,6 @@ public class RadishFarmer extends AbstractItem {
 
     @Override
     public void process(TimeStep timeStep) {
-        System.out.println("DEBUG: Timestep = " + timeStep);
 
         // If the turn is a multiple of 3
         if((timeStep.getValue()%3) == 0){
@@ -27,7 +26,6 @@ public class RadishFarmer extends AbstractItem {
             // Add into if statement or another if statement
 
             //Produce some food
-            System.out.println("DEBUG: Creating something");
             // Remember to pass nutrition value not num of radishes
             addToStock(10);
 

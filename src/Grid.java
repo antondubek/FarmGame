@@ -32,7 +32,6 @@ public class Grid extends AbstractGrid{
     public AbstractItem getItem(int xCoordinate, int yCoordinate) {
         // Check if there is an item at location, if T return, else null
         if (grid[xCoordinate][yCoordinate] instanceof AbstractItem){
-            System.out.println("DEBUG: getItem return = " + grid[xCoordinate][yCoordinate]);
             return grid[xCoordinate][yCoordinate];
         } else {
             return null;
@@ -76,8 +75,31 @@ public class Grid extends AbstractGrid{
         for (int y = 0; y < grid.length; y++) {
             for (int x = 0; x < grid[y].length; x++) {
                 //if item is an item and a radish farmer
-                if(getItem(x,y) != null && getItem(x,y) instanceof RadishFarmer) {
-                    getItem(x, y).process(timeStep);
+                AbstractItem farmerItem = getItem(x,y);
+                if((farmerItem != null) && ((farmerItem instanceof RadishFarmer) || (farmerItem instanceof  CornFarmer))){
+                    farmerItem.process(timeStep);
+                }
+            }
+        }
+
+        //For transporters
+        for (int y = 0; y < grid.length; y++) {
+            for (int x = 0; x < grid[y].length; x++) {
+                //if item is an item is a transporter
+                AbstractItem transporterItem = getItem(x,y);
+                if((transporterItem != null) && ((transporterItem instanceof VerticalTransporter) || (transporterItem instanceof  HorizontalTransporter))){
+                    transporterItem.process(timeStep);
+                }
+            }
+        }
+
+        //For consumers
+        for (int y = 0; y < grid.length; y++) {
+            for (int x = 0; x < grid[y].length; x++) {
+                //if item is an item and a consumer
+                AbstractItem consumerItem = getItem(x,y);
+                if((consumerItem != null) && ((consumerItem instanceof Rabbit) || (consumerItem instanceof  Beaver))) {
+                    consumerItem.process(timeStep);
                 }
             }
         }
