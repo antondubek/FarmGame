@@ -1,17 +1,12 @@
 public class FarmGame {
     public static void main(String[] args){
-        Grid grid = new Grid(5, 5);
+        Grid grid = new Grid(5, 3);
         new CornFarmer(grid, 0, 0);
-        new CornFarmer(grid, 0, 1);
-        new RadishFarmer(grid, 4, 4);
-        new Rabbit(grid, 0, 4);
-        new Beaver(grid, 4, 0);
-        new HorizontalTransporter(grid, 0, 2, 10);
-        new HorizontalTransporter(grid, 4, 2, 10);
-        new VerticalTransporter(grid, 2, 0, 10);
-        new VerticalTransporter(grid, 2, 4, 10);
+        new RadishFarmer(grid, 4, 0);
+        new Rabbit(grid, 0, 2);
+        new NearestTransporter(grid, 2, 1, 10);
 
         Game game = new Game(grid);
-        game.run(50);
+        game.run(5);
     }
 }

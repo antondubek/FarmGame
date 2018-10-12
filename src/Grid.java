@@ -76,7 +76,7 @@ public class Grid extends AbstractGrid{
             for (int x = 0; x <= getWidth()-1; x++) {
                 //if item is an item and a radish farmer
                 AbstractItem farmerItem = getItem(x,y);
-                if((farmerItem != null) && ((farmerItem instanceof RadishFarmer) || (farmerItem instanceof  CornFarmer))){
+                if(((farmerItem instanceof RadishFarmer) || (farmerItem instanceof  CornFarmer))){
                     farmerItem.process(timeStep);
                 }
             }
@@ -87,7 +87,8 @@ public class Grid extends AbstractGrid{
             for (int x = 0; x <= getWidth()-1; x++) {
                 //if item is an item is a transporter
                 AbstractItem transporterItem = getItem(x,y);
-                if((transporterItem != null) && ((transporterItem instanceof VerticalTransporter) || (transporterItem instanceof  HorizontalTransporter))){
+                if(((transporterItem instanceof VerticalTransporter) || (transporterItem instanceof  HorizontalTransporter)
+                 || (transporterItem instanceof NearestTransporter))){
                     transporterItem.process(timeStep);
                 }
             }
@@ -99,12 +100,11 @@ public class Grid extends AbstractGrid{
             for (int x = 0; x <= getWidth()-1; x++) {
                 //if item is an item and a consumer
                 AbstractItem consumerItem = getItem(x,y);
-                if((consumerItem != null) && ((consumerItem instanceof Rabbit) || (consumerItem instanceof  Beaver))) {
+                if(((consumerItem instanceof Rabbit) || (consumerItem instanceof  Beaver))) {
                     consumerItem.process(timeStep);
                 }
             }
         }
-
     }
 
     @Override
@@ -126,4 +126,6 @@ public class Grid extends AbstractGrid{
     public int getTotalConsumption() {
         return totalConsumption;
     }
+
+
 }
