@@ -1,6 +1,6 @@
 public class CornFarmer extends AbstractItem {
 
-    public CornFarmer(Grid grid, int xCoordinate, int yCoordinate){
+    public CornFarmer(Grid grid, int yCoordinate, int xCoordinate){
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
         this.grid = grid;
@@ -39,24 +39,27 @@ public class CornFarmer extends AbstractItem {
         boolean yDOkay = false;
 
         //check left
+        System.out.println("here1");
         if(xCoordinate == 0){
             xLOkay = true;
         } else if((xCoordinate == 1) && !(isFarmer(xCoordinate-1, yCoordinate))){
             xLOkay = true;
-        } else if (!(isFarmer(xCoordinate-2, yCoordinate))){
+        } else if ((xCoordinate > 1) && !(isFarmer(xCoordinate-2, yCoordinate))){
             xLOkay = true;
         }
 
         //check right
+        System.out.println("here2");
         if(xCoordinate == grid.getWidth()-1){
             xROkay = true;
         } else if((xCoordinate == grid.getWidth()-2) && !(isFarmer(xCoordinate+1, yCoordinate))){
             xROkay = true;
-        } else if (!(isFarmer(xCoordinate+2, yCoordinate))){
+        } else if ((xCoordinate < grid.getWidth()-2) && !(isFarmer(xCoordinate+2, yCoordinate))){
             xROkay = true;
         }
 
         //check Up
+        System.out.println("here3");
         if(yCoordinate == 0){
             yUOkay = true;
         } else if (!(isFarmer(xCoordinate, yCoordinate-1))){
@@ -64,16 +67,12 @@ public class CornFarmer extends AbstractItem {
         }
 
         //check Down
+        System.out.println("here4");
         if(yCoordinate == grid.getHeight()-1){
             yDOkay = true;
         } else if (!(isFarmer(xCoordinate, yCoordinate+1))){
             yDOkay = true;
         }
-
-        System.out.println(xLOkay);
-        System.out.println(xROkay);
-        System.out.println(yDOkay);
-        System.out.println(yUOkay);
 
         if(xLOkay && xROkay && yUOkay && yDOkay){
             return true;
@@ -109,6 +108,5 @@ public class CornFarmer extends AbstractItem {
         } else {
             return false;
         }
-
     }
 }

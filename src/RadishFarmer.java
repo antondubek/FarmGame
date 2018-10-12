@@ -43,29 +43,29 @@ public class RadishFarmer extends AbstractItem {
         //check left
         if(xCoordinate == 0){
             xLOkay = true;
-        } else if(grid.getItem(xCoordinate-1, yCoordinate) == null){
+        } else if(!(isFarmer(xCoordinate-1, yCoordinate))){
             xLOkay = true;
         }
 
         //check right
         if(xCoordinate == grid.getWidth()-1){
             xROkay = true;
-        } else if(grid.getItem(xCoordinate+1, yCoordinate) == null){
+        } else if(!(isFarmer(xCoordinate+1, yCoordinate))){
             xROkay = true;
         }
 
         //check Up
         if(yCoordinate == 0){
             yUOkay = true;
-        } else if (grid.getItem(xCoordinate, yCoordinate-1) == null){
+        } else if (!(isFarmer(xCoordinate, yCoordinate-1))){
             yUOkay = true;
         }
 
         //check Down
         if(yCoordinate == grid.getHeight()-1){
-            yUOkay = true;
-        } else if (grid.getItem(xCoordinate, yCoordinate+1) == null){
-            yUOkay = true;
+            yDOkay = true;
+        } else if (!(isFarmer(xCoordinate, yCoordinate+1))){
+            yDOkay = true;
         }
 
         if(xLOkay && xROkay && yUOkay && yDOkay){
@@ -92,5 +92,15 @@ public class RadishFarmer extends AbstractItem {
     protected void reduceStock(int nutrition) {
         //Reduece stock at the items location
         this.grid.reduceStockAt(this.xCoordinate, this.yCoordinate, nutrition);
+    }
+
+    private boolean isFarmer(int x, int y){
+        AbstractItem item = grid.getItem(x,y);
+
+        if(item instanceof RadishFarmer || item instanceof CornFarmer){
+            return true;
+        } else {
+            return false;
+        }
     }
 }
