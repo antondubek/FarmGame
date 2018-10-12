@@ -18,11 +18,11 @@ public class VerticalTransporter extends AbstractItem {
     @Override
     public void process(TimeStep timeStep) {
         // get the column of transporter (xcord)
-        // start at y coord of the transporter and go up to find something
+        // start at y coord of the transporter and go down to find something
         AbstractItem farmer = null;
         AbstractItem consumer = null;
-        for(int x = xCoordinate; x < grid.getHeight(); x++){
-            AbstractItem item = grid.getItem(x, yCoordinate);
+        for(int y = yCoordinate; y < grid.getHeight(); y++){
+            AbstractItem item = grid.getItem(xCoordinate, y);
             if((item instanceof RadishFarmer) || (item instanceof CornFarmer)){
                 farmer = item;
                 break;
@@ -32,9 +32,9 @@ public class VerticalTransporter extends AbstractItem {
             }
         }
 
-        // go down till you find something else
-        for(int x = xCoordinate; x >= 0; x--){
-            AbstractItem item = grid.getItem(x, yCoordinate);
+        // go up till you find something else
+        for(int y = yCoordinate; y >= 0; y--){
+            AbstractItem item = grid.getItem(xCoordinate, y);
             if((item instanceof RadishFarmer) || (item instanceof CornFarmer)){
                 farmer = item;
                 break;
