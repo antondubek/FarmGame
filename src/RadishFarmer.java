@@ -19,7 +19,7 @@ public class RadishFarmer extends AbstractItem {
     public void process(TimeStep timeStep) {
 
         // If the turn is a multiple of 3
-        if((timeStep.getValue()%3) == 0){
+        if(((timeStep.getValue()%3) == 0 )&& checkSpace()){
 
             // IF there is nothing around it, check notes!!
             // Add into if statement or another if statement
@@ -31,6 +31,53 @@ public class RadishFarmer extends AbstractItem {
             //Update total production
             grid.recordProduction(10);
         }
+    }
+
+    private boolean checkSpace(){
+        // if there is space in 4 directions then return true
+        boolean xROkay = false;
+        boolean xLOkay = false;
+        boolean yUOkay = false;
+        boolean yDOkay = false;
+
+        System.out.println("Here1");
+        //check left
+        if(xCoordinate == 0){
+            xLOkay = true;
+        } else if(grid.getItem(xCoordinate-1, yCoordinate) == null){
+            xLOkay = true;
+        }
+
+        System.out.println("Here2");
+        //check right
+        if(xCoordinate == grid.getWidth()-1){
+            xROkay = true;
+        } else if(grid.getItem(xCoordinate+1, yCoordinate) == null){
+            xROkay = true;
+        }
+
+        System.out.println("Here3");
+        //check Up
+        if(yCoordinate == 0){
+            yUOkay = true;
+        } else if (grid.getItem(yCoordinate-1, xCoordinate) == null){
+            yUOkay = true;
+        }
+
+        System.out.println("Here4");
+        //check Down
+        if(yCoordinate == grid.getHeight()-1){
+            yUOkay = true;
+        } else if (grid.getItem(yCoordinate+1, xCoordinate) == null){
+            yUOkay = true;
+        }
+
+        if(xLOkay && xROkay && yUOkay && yDOkay){
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     @Override
