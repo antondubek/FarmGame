@@ -43,7 +43,7 @@ public class CornFarmer extends AbstractItem {
             xLOkay = true;
         } else if((xCoordinate == 1) && !(isFarmer(xCoordinate-1, yCoordinate))){
             xLOkay = true;
-        } else if ((xCoordinate > 1) && !(isFarmer(xCoordinate-2, yCoordinate))){
+        } else if ((xCoordinate > 1) && !(isFarmer(xCoordinate-1, yCoordinate)) && !(isFarmer(xCoordinate-2, yCoordinate))){
             xLOkay = true;
         }
 
@@ -52,7 +52,7 @@ public class CornFarmer extends AbstractItem {
             xROkay = true;
         } else if((xCoordinate == grid.getWidth()-2) && !(isFarmer(xCoordinate+1, yCoordinate))){
             xROkay = true;
-        } else if ((xCoordinate < grid.getWidth()-2) && !(isFarmer(xCoordinate+2, yCoordinate))){
+        } else if ((xCoordinate < grid.getWidth()-2) && !(isFarmer(xCoordinate+1, yCoordinate)) && !(isFarmer(xCoordinate+2, yCoordinate))){
             xROkay = true;
         }
 
