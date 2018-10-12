@@ -40,7 +40,6 @@ public class RadishFarmer extends AbstractItem {
         boolean yUOkay = false;
         boolean yDOkay = false;
 
-        System.out.println("Here1");
         //check left
         if(xCoordinate == 0){
             xLOkay = true;
@@ -48,7 +47,6 @@ public class RadishFarmer extends AbstractItem {
             xLOkay = true;
         }
 
-        System.out.println("Here2");
         //check right
         if(xCoordinate == grid.getWidth()-1){
             xROkay = true;
@@ -56,19 +54,17 @@ public class RadishFarmer extends AbstractItem {
             xROkay = true;
         }
 
-        System.out.println("Here3");
         //check Up
         if(yCoordinate == 0){
             yUOkay = true;
-        } else if (grid.getItem(yCoordinate-1, xCoordinate) == null){
+        } else if (grid.getItem(xCoordinate, yCoordinate-1) == null){
             yUOkay = true;
         }
 
-        System.out.println("Here4");
         //check Down
         if(yCoordinate == grid.getHeight()-1){
             yUOkay = true;
-        } else if (grid.getItem(yCoordinate+1, xCoordinate) == null){
+        } else if (grid.getItem(xCoordinate, yCoordinate+1) == null){
             yUOkay = true;
         }
 
