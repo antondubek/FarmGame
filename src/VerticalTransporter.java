@@ -1,7 +1,7 @@
 public class VerticalTransporter extends AbstractItem {
     private int capacity;
 
-    public VerticalTransporter(Grid grid, int xCoordinate, int yCoordinate, int capacity){
+    public VerticalTransporter(Grid grid, int yCoordinate, int xCoordinate, int capacity){
         this.grid = grid;
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;

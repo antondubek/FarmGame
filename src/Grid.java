@@ -8,8 +8,8 @@ public class Grid extends AbstractGrid{
     Grid(int height, int width){
         this.width = width;
         this.height = height;
-        grid = new AbstractItem[width][height];
-        stock = new int[width][height];
+        grid = new AbstractItem[height][width];
+        stock = new int[height][width];
     }
 
     @Override
@@ -25,14 +25,14 @@ public class Grid extends AbstractGrid{
     @Override
     public void registerItem(int xCoordinate, int yCoordinate, AbstractItem item) {
         // Put the item into the location on the grid
-        grid[xCoordinate][yCoordinate] = item;
+        grid[yCoordinate][xCoordinate] = item;
     }
 
     @Override
     public AbstractItem getItem(int xCoordinate, int yCoordinate) {
         // Check if there is an item at location, if T return, else null
-        if (grid[xCoordinate][yCoordinate] instanceof AbstractItem){
-            return grid[xCoordinate][yCoordinate];
+        if (grid[yCoordinate][xCoordinate] instanceof AbstractItem){
+            return grid[yCoordinate][xCoordinate];
         } else {
             return null;
         }
@@ -41,7 +41,7 @@ public class Grid extends AbstractGrid{
     @Override
     public int getStockAt(int xCoordinate, int yCoordinate) {
         //. Returns amount of stock at a location
-        return stock[xCoordinate][yCoordinate];
+        return stock[yCoordinate][xCoordinate];
     }
 
     @Override
@@ -65,15 +65,15 @@ public class Grid extends AbstractGrid{
 
     @Override
     public void setStockAt(int xCoordinate, int yCoordinate, int nutrition) {
-        stock[xCoordinate][yCoordinate] = nutrition;
+        stock[yCoordinate][xCoordinate] = nutrition;
     }
 
     @Override
     public void processItems(TimeStep timeStep) {
 
         //For farmers
-        for (int y = getHeight() - 1; y >= 0; y--) {
-            for (int x = 0; x < getWidth(); x++) {
+        for (int y = 0; y <= (getHeight()-1); y++) {
+            for (int x = 0; x <= getWidth()-1; x++) {
                 //if item is an item and a radish farmer
                 AbstractItem farmerItem = getItem(x,y);
                 if((farmerItem != null) && ((farmerItem instanceof RadishFarmer) || (farmerItem instanceof  CornFarmer))){
@@ -83,8 +83,8 @@ public class Grid extends AbstractGrid{
         }
 
         //For transporters
-        for (int y = getHeight() - 1; y >= 0; y--) {
-            for (int x = 0; x < getWidth(); x++) {
+        for (int y = 0; y <= getHeight()-1; y++) {
+            for (int x = 0; x <= getWidth()-1; x++) {
                 //if item is an item is a transporter
                 AbstractItem transporterItem = getItem(x,y);
                 if((transporterItem != null) && ((transporterItem instanceof VerticalTransporter) || (transporterItem instanceof  HorizontalTransporter))){
@@ -93,9 +93,10 @@ public class Grid extends AbstractGrid{
             }
         }
 
+
         //For consumers
-        for (int y = getHeight() - 1; y >= 0; y--) {
-            for (int x = 0; x < getWidth(); x++) {
+        for (int y = 0; y <= getHeight()-1; y++) {
+            for (int x = 0; x <= getWidth()-1; x++) {
                 //if item is an item and a consumer
                 AbstractItem consumerItem = getItem(x,y);
                 if((consumerItem != null) && ((consumerItem instanceof Rabbit) || (consumerItem instanceof  Beaver))) {
@@ -103,6 +104,7 @@ public class Grid extends AbstractGrid{
                 }
             }
         }
+
     }
 
     @Override

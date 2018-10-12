@@ -1,7 +1,7 @@
 
 public class RadishFarmer extends AbstractItem {
 
-    public RadishFarmer(Grid grid, int xCoordinate, int yCoordinate){
+    public RadishFarmer(Grid grid, int yCoordinate, int xCoordinate){
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
         this.grid = grid;

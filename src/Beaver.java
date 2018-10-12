@@ -1,6 +1,6 @@
 public class Beaver extends AbstractItem {
 
-    public Beaver(Grid grid, int xCoordinate, int yCoordinate){
+    public Beaver(Grid grid, int yCoordinate, int xCoordinate){
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
         this.grid = grid;

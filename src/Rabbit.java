@@ -1,6 +1,6 @@
 public class Rabbit extends AbstractItem {
 
-    public Rabbit(Grid grid, int xCoordinate, int yCoordinate){
+    public Rabbit(Grid grid, int yCoordinate, int xCoordinate){
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
         this.grid = grid;
