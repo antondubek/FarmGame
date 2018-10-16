@@ -100,7 +100,7 @@ public class Grid extends AbstractGrid{
     }
 
     /**
-     *
+     * Adds a specified amount of stock to a location
      * @param xCoordinate the row number
      * @param yCoordinate the column number
      * @param nutrition the amount
@@ -112,7 +112,7 @@ public class Grid extends AbstractGrid{
     }
 
     /**
-     *
+     * Reduces the stock at a location by a specified amount
      * @param xCoordinate the row number
      * @param yCoordinate the column number
      * @param nutrition the amount
@@ -124,7 +124,8 @@ public class Grid extends AbstractGrid{
     }
 
     /**
-     *
+     * Updates the stock value at a specified location
+     * is called by other stock methods
      * @param xCoordinate the row number
      * @param yCoordinate the column number
      * @param nutrition the amount
@@ -135,7 +136,8 @@ public class Grid extends AbstractGrid{
     }
 
     /**
-     *
+     *Iterates through the whole grid left to right, top to bottom, running the process methods of farmers first,
+     *  then transporters and finally consumers
      * @param timeStep The time step we are at. This value may be used to determine production frequency of farmers.
      */
     @Override
@@ -177,7 +179,7 @@ public class Grid extends AbstractGrid{
     }
 
     /**
-     *
+     * Retains the amouunt of nutrition that has been produced by the whole grid up to that turn
      * @param nutrition the amount
      */
     @Override
@@ -186,8 +188,8 @@ public class Grid extends AbstractGrid{
     }
 
     /**
-     *
-     * @return
+     * Returns the total production that is being recorded
+     * @return int the total production
      */
     @Override
     public int getTotalProduction() {
@@ -195,7 +197,7 @@ public class Grid extends AbstractGrid{
     }
 
     /**
-     *
+     *Retains the amouunt of nutrition that has been consumed by the whole grid up to that turn
      * @param nutrition the amount
      */
     @Override
@@ -204,8 +206,8 @@ public class Grid extends AbstractGrid{
     }
 
     /**
-     *
-     * @return
+     *Returns the total consumption that is being recorded
+     * @return nutrition the amount consumed
      */
     @Override
     public int getTotalConsumption() {
