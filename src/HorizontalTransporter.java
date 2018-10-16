@@ -1,15 +1,18 @@
 /**
- *
+ * Horizontal Transporter Class contains methods for a transporter to move stock between a farmer and
+ * consumer either side horizontally of it with nothing blocking.
  **/
 public class HorizontalTransporter extends Transporter {
     private int capacity;
 
     /**
-     *
-     * @param grid
-     * @param yCoordinate
-     * @param xCoordinate
-     * @param capacity
+     *Horizontal Transporter Constructor
+     * Sets local parameters of x, y, grid and capacity
+     * Registers the item into the grid
+     * @param grid Grid grid which the object needs to belong to and be put into
+     * @param yCoordinate int Y coordinate of where the item is to be on the grid
+     * @param xCoordinate int x coordinate of where the item is to be on the grid
+     * @param capacity int the amount of stock (in nutrition) that the transporter can move per timestep
      */
     public HorizontalTransporter(Grid grid, int yCoordinate, int xCoordinate, int capacity){
         this.grid = grid;
@@ -21,8 +24,8 @@ public class HorizontalTransporter extends Transporter {
     }
 
     /**
-     *
-     * @return
+     * Returns the transporters name to display on the grid.
+     * @return String name
      */
     @Override
     public String toString() {
@@ -30,7 +33,11 @@ public class HorizontalTransporter extends Transporter {
     }
 
     /**
-     *
+     * Transporter initially finds the nearest object to its right, then left.
+     * A check is then made for the instance of hedgehog whether it is currently accepting stock
+     * With 2 items found, a check is then carried out to make sure 1 is a farmer and 1 is a consumer
+     * If so, stock is moved from the farmer to the consumer up to the capacity of the transporter
+     * Otherwise nothing happens
      * @param timeStep The current time-step
      */
     @Override
@@ -80,9 +87,6 @@ public class HorizontalTransporter extends Transporter {
             }
         }
 
-        //System.out.println(farmer);
-        //System.out.println(consumer);
-
         // Check we have found 2 things
         if((farmer != null) && (consumer != null)){
             // get the stock level at the farmer locationSystem.out.println("DEBUG: getItem return = " + grid[xCoordinate][yCoordinate]);
@@ -103,30 +107,4 @@ public class HorizontalTransporter extends Transporter {
 
     }
 
-    /**
-     *
-     * @return
-     */
-    @Override
-    protected int getStock() {
-        return 0;
-    }
-
-    /**
-     *
-     * @param nutrition The amount of nutrition to add
-     */
-    @Override
-    protected void addToStock(int nutrition) {
-
-    }
-
-    /**
-     *
-     * @param nutrition The amount of nutrition to subtract
-     */
-    @Override
-    protected void reduceStock(int nutrition) {
-
-    }
 }

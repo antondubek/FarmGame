@@ -65,21 +65,6 @@ public class NearestTransporter extends Transporter {
 
     }
 
-    @Override
-    protected int getStock() {
-        return 0;
-    }
-
-    @Override
-    protected void addToStock(int nutrition) {
-
-    }
-
-    @Override
-    protected void reduceStock(int nutrition) {
-
-    }
-
     private List<AbstractItem> getFarmers(){
 
         //Create an empty list of farmers

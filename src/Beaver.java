@@ -34,19 +34,4 @@ public class Beaver extends Consumer {
             reduceStock(stockLevel);
         }
     }
-
-    @Override
-    protected int getStock() {
-        return this.grid.getStockAt(this.xCoordinate, this.yCoordinate);
-    }
-
-    @Override
-    protected void addToStock(int nutrition) {
-        this.grid.addToStockAt(this.xCoordinate, this.yCoordinate, nutrition);
-    }
-
-    @Override
-    protected void reduceStock(int nutrition) {
-        this.grid.reduceStockAt(this.xCoordinate, this.yCoordinate, nutrition);
-    }
 }
