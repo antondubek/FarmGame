@@ -24,8 +24,12 @@ public class Grid extends AbstractGrid{
 
     @Override
     public void registerItem(int xCoordinate, int yCoordinate, AbstractItem item) {
-        // Put the item into the location on the grid
-        grid[yCoordinate][xCoordinate] = item;
+        if(item == null){
+            grid[yCoordinate][xCoordinate] = null;
+        } else {
+            // Put the item into the location on the grid
+            grid[yCoordinate][xCoordinate] = item;
+        }
     }
 
     @Override
@@ -100,7 +104,7 @@ public class Grid extends AbstractGrid{
             for (int x = 0; x <= getWidth()-1; x++) {
                 //if item is an item and a consumer
                 AbstractItem consumerItem = getItem(x,y);
-                if(((consumerItem instanceof Rabbit) || (consumerItem instanceof  Beaver))) {
+                if(((consumerItem instanceof Rabbit) || (consumerItem instanceof  Beaver) || (consumerItem instanceof Hedgehog))) {
                     consumerItem.process(timeStep);
                 }
             }

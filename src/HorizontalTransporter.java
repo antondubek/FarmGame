@@ -26,9 +26,18 @@ public class HorizontalTransporter extends AbstractItem {
             if((item instanceof RadishFarmer) || (item instanceof CornFarmer)){
                 farmer = item;
                 break;
-            } else if((item instanceof Rabbit) || (item instanceof Beaver)) {
-                consumer = item;
-                break;
+            } else if((item instanceof Rabbit) || (item instanceof Beaver) || (item instanceof Hedgehog)) {
+                if((item instanceof Hedgehog)){
+                    if(((Hedgehog) item).isAccepting()){
+                        consumer = item;
+                        break;
+                    } else {
+                        break;
+                    }
+                } else {
+                    consumer = item;
+                    break;
+                }
             }
         }
 
@@ -38,9 +47,18 @@ public class HorizontalTransporter extends AbstractItem {
             if((item instanceof RadishFarmer) || (item instanceof CornFarmer)){
                 farmer = item;
                 break;
-            } else if((item instanceof Rabbit) || (item instanceof Beaver)) {
-                consumer = item;
-                break;
+            } else if((item instanceof Rabbit) || (item instanceof Beaver) || (item instanceof Hedgehog)) {
+                if((item instanceof Hedgehog)){
+                    if(((Hedgehog) item).isAccepting()){
+                        consumer = item;
+                        break;
+                    } else {
+                        break;
+                    }
+                } else {
+                    consumer = item;
+                    break;
+                }
             }
         }
 
