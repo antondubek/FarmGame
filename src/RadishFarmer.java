@@ -1,6 +1,17 @@
-
+/**
+ * Type of farmer class that produces 10 radish equalling 10 nutrition every 3 turns
+ * as long as there is no other farmers above, below, or either side of it.
+ */
 public class RadishFarmer extends Farmer {
 
+    /**
+     * Radish Farmer Constructor
+     * Sets local parameters of x, y and grid
+     * Registers the item into the grid
+     * @param grid Grid grid which the object needs to belong to and be put into
+     * @param yCoordinate int Y coordinate of where the item is to be on the grid
+     * @param xCoordinate int x coordinate of where the item is to be on the grid
+     */
     public RadishFarmer(Grid grid, int yCoordinate, int xCoordinate){
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
@@ -10,11 +21,20 @@ public class RadishFarmer extends Farmer {
 
     }
 
+    /**
+     * Returns the farmers name to display on the grid
+     * @return String name(stock level)
+     */
     @Override
     public String toString() {
         return "Radish("+getStock()+")";
     }
 
+    /**
+     * Checks if the timestep is a multiple of 4 and there is the needed space
+     * before producing 25 nutrition and adding it to the stock level.
+     * @param timeStep The current time-step
+     */
     @Override
     public void process(TimeStep timeStep) {
 
@@ -33,6 +53,11 @@ public class RadishFarmer extends Farmer {
         }
     }
 
+    /**
+     * Takes the objects location and checks 1 space up and down and 1 space left and right
+     * to determine if there is another farmer.
+     * @return True if there are no farmers, false if a farmer is found
+     */
     private boolean checkSpace(){
         // if there is space in 4 directions then return true
         boolean xROkay = false;
@@ -74,15 +99,5 @@ public class RadishFarmer extends Farmer {
             return false;
         }
 
-    }
-
-    private boolean isFarmer(int x, int y){
-        AbstractItem item = grid.getItem(x,y);
-
-        if(item instanceof RadishFarmer || item instanceof CornFarmer){
-            return true;
-        } else {
-            return false;
-        }
     }
 }

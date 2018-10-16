@@ -1,6 +1,15 @@
+/**
+ * Class which creates an inheritence path for transporters
+ * Mainly used for simplicity of checking whether an item is a transporter
+ * and abstracting methods
+ */
 class Transporter extends AbstractItem {
 
 
+    /** Empty process class needed to validate as an AbstractItem
+     * this is looked after by individual transporter classes
+     * @param timeStep The current time-step
+     */
     @Override
     public void process(TimeStep timeStep) {
 

@@ -1,5 +1,17 @@
+/**
+ * Type of farmer class that produces 5 corn equalling 25 nutrition every 4 turns
+ * as long as there is no other farmers 2 above or below, or either side of it.
+ */
 public class CornFarmer extends Farmer {
 
+    /**
+     * Corn Farmer Constructor
+     * Sets local parameters of x, y and grid
+     * Registers the item into the grid
+     * @param grid Grid grid which the object needs to belong to and be put into
+     * @param yCoordinate int Y coordinate of where the item is to be on the grid
+     * @param xCoordinate int x coordinate of where the item is to be on the grid
+     */
     public CornFarmer(Grid grid, int yCoordinate, int xCoordinate){
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
@@ -8,19 +20,24 @@ public class CornFarmer extends Farmer {
         grid.registerItem(xCoordinate, yCoordinate, this);
     }
 
+    /**
+     * Returns the farmers name to display on the grid
+     * @return String name(stock level)
+     */
     @Override
     public String toString() {
         return "Corn("+getStock()+")";
     }
 
+    /**
+     * Checks if the timestep is a multiple of 4 and there is the needed space
+     * before producing 25 nutrition and adding it to the stock level.
+     * @param timeStep The current time-step
+     */
     @Override
     public void process(TimeStep timeStep) {
         // If the turn is a multiple of 3
         if(((timeStep.getValue()%4) == 0) && checkSpace()){
-
-            // IF there is nothing around it, check notes!!
-            // Add into if statement or another if statement
-
             //Produce some food
             // Remember to pass nutrition value not num of radishes
             addToStock(25);
@@ -31,6 +48,11 @@ public class CornFarmer extends Farmer {
 
     }
 
+    /**
+     * Takes the objects location and checks 1 space up and down and 2 spaces left and right
+     * to determine if there is another farmer.
+     * @return True if there are no farmers, false if a farmer is found
+     */
     private boolean checkSpace(){
         // if there is space in 4 directions then return true
         boolean xROkay = false;
@@ -78,13 +100,4 @@ public class CornFarmer extends Farmer {
 
     }
 
-    private boolean isFarmer(int x, int y){
-        AbstractItem item = grid.getItem(x,y);
-
-        if(item instanceof RadishFarmer || item instanceof CornFarmer){
-            return true;
-        } else {
-            return false;
-        }
-    }
 }
