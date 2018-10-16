@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class NearestTransporter extends AbstractItem {
+public class NearestTransporter extends Transporter {
     private int capacity;
     private List<AbstractItem> farmers;
     private List<AbstractItem> consumers;
@@ -90,7 +90,7 @@ public class NearestTransporter extends AbstractItem {
             for (int x = 0; x <= grid.getWidth()-1; x++) {
                 //if item is an item and a farmer, add it to the list
                 AbstractItem farmerItem = grid.getItem(x,y);
-                if(((farmerItem instanceof RadishFarmer) || (farmerItem instanceof  CornFarmer))){
+                if(farmerItem instanceof Farmer){
                     farmers.add(farmerItem);
                 }
             }
@@ -107,7 +107,7 @@ public class NearestTransporter extends AbstractItem {
             for (int x = 0; x <= grid.getWidth()-1; x++) {
                 //if item is an item and a consumer add it to the list
                 AbstractItem consumerItem = grid.getItem(x,y);
-                if(((consumerItem instanceof Rabbit) || (consumerItem instanceof  Beaver))) {
+                if(consumerItem instanceof Consumer) {
                     consumers.add(consumerItem);
                 }
             }

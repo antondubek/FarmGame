@@ -1,6 +1,6 @@
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Hedgehog extends AbstractItem {
+public class Hedgehog extends Consumer {
 
     private boolean isAccepting = true;
 

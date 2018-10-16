@@ -1,6 +1,16 @@
-public class HorizontalTransporter extends AbstractItem {
+/**
+ *
+ **/
+public class HorizontalTransporter extends Transporter {
     private int capacity;
 
+    /**
+     *
+     * @param grid
+     * @param yCoordinate
+     * @param xCoordinate
+     * @param capacity
+     */
     public HorizontalTransporter(Grid grid, int yCoordinate, int xCoordinate, int capacity){
         this.grid = grid;
         this.xCoordinate = xCoordinate;
@@ -10,11 +20,19 @@ public class HorizontalTransporter extends AbstractItem {
         grid.registerItem(xCoordinate,yCoordinate, this);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return "HT";
     }
 
+    /**
+     *
+     * @param timeStep The current time-step
+     */
     @Override
     public void process(TimeStep timeStep) {
         // get the row of transporter (xcord)
@@ -23,10 +41,10 @@ public class HorizontalTransporter extends AbstractItem {
         AbstractItem consumer = null;
         for(int x = xCoordinate; x < grid.getWidth(); x++){
             AbstractItem item = grid.getItem(x, yCoordinate);
-            if((item instanceof RadishFarmer) || (item instanceof CornFarmer)){
+            if(item instanceof Farmer){
                 farmer = item;
                 break;
-            } else if((item instanceof Rabbit) || (item instanceof Beaver) || (item instanceof Hedgehog)) {
+            } else if(item instanceof Consumer) {
                 if((item instanceof Hedgehog)){
                     if(((Hedgehog) item).isAccepting()){
                         consumer = item;
@@ -44,10 +62,10 @@ public class HorizontalTransporter extends AbstractItem {
         // go left till you find something else
         for(int x = xCoordinate; x >= 0; x--){
             AbstractItem item = grid.getItem(x, yCoordinate);
-            if((item instanceof RadishFarmer) || (item instanceof CornFarmer)){
+            if(item instanceof Farmer){
                 farmer = item;
                 break;
-            } else if((item instanceof Rabbit) || (item instanceof Beaver) || (item instanceof Hedgehog)) {
+            } else if(item instanceof Consumer) {
                 if((item instanceof Hedgehog)){
                     if(((Hedgehog) item).isAccepting()){
                         consumer = item;
@@ -85,16 +103,28 @@ public class HorizontalTransporter extends AbstractItem {
 
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     protected int getStock() {
         return 0;
     }
 
+    /**
+     *
+     * @param nutrition The amount of nutrition to add
+     */
     @Override
     protected void addToStock(int nutrition) {
 
     }
 
+    /**
+     *
+     * @param nutrition The amount of nutrition to subtract
+     */
     @Override
     protected void reduceStock(int nutrition) {
 

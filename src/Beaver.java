@@ -1,4 +1,4 @@
-public class Beaver extends AbstractItem {
+public class Beaver extends Consumer {
 
     public Beaver(Grid grid, int yCoordinate, int xCoordinate){
         this.xCoordinate = xCoordinate;

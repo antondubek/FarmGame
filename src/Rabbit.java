@@ -1,4 +1,4 @@
-public class Rabbit extends AbstractItem {
+public class Rabbit extends Consumer {
 
     public Rabbit(Grid grid, int yCoordinate, int xCoordinate){
         this.xCoordinate = xCoordinate;

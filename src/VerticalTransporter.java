@@ -1,4 +1,4 @@
-public class VerticalTransporter extends AbstractItem {
+public class VerticalTransporter extends Transporter {
     private int capacity;
 
     public VerticalTransporter(Grid grid, int yCoordinate, int xCoordinate, int capacity){
@@ -23,10 +23,10 @@ public class VerticalTransporter extends AbstractItem {
         AbstractItem consumer = null;
         for(int y = yCoordinate; y < grid.getHeight(); y++){
             AbstractItem item = grid.getItem(xCoordinate, y);
-            if((item instanceof RadishFarmer) || (item instanceof CornFarmer)){
+            if(item instanceof Farmer){
                 farmer = item;
                 break;
-            } else if((item instanceof Rabbit) || (item instanceof Beaver) || (item instanceof Hedgehog)) {
+            } else if(item instanceof Consumer) {
                 if((item instanceof Hedgehog)){
                     if(((Hedgehog) item).isAccepting()){
                         consumer = item;
@@ -44,10 +44,10 @@ public class VerticalTransporter extends AbstractItem {
         // go up till you find something else
         for(int y = yCoordinate; y >= 0; y--){
             AbstractItem item = grid.getItem(xCoordinate, y);
-            if((item instanceof RadishFarmer) || (item instanceof CornFarmer)){
+            if(item instanceof Farmer){
                 farmer = item;
                 break;
-            } else if((item instanceof Rabbit) || (item instanceof Beaver) || (item instanceof Hedgehog)) {
+            } else if(item instanceof Consumer) {
                 if((item instanceof Hedgehog)){
                     if(((Hedgehog) item).isAccepting()){
                         consumer = item;

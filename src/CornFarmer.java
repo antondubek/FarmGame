@@ -1,4 +1,4 @@
-public class CornFarmer extends AbstractItem {
+public class CornFarmer extends Farmer {
 
     public CornFarmer(Grid grid, int yCoordinate, int xCoordinate){
         this.xCoordinate = xCoordinate;

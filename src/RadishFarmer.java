@@ -1,5 +1,5 @@
 
-public class RadishFarmer extends AbstractItem {
+public class RadishFarmer extends Farmer {
 
     public RadishFarmer(Grid grid, int yCoordinate, int xCoordinate){
         this.xCoordinate = xCoordinate;
