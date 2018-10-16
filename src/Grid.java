@@ -43,9 +43,9 @@ public class Grid extends AbstractGrid{
     /**
      * Registers an item on the grid at the location passed. If null is passed then the object at that location
      * is deleted. This is used for the hedgehog class.
-     * @param xCoordinate
-     * @param yCoordinate
-     * @param item
+     * @param xCoordinate int xcoordinate of object to be added or deleted
+     * @param yCoordinate int ycoordinate of object to be added or deleted
+     * @param item AbstractItem Object to be added or null to delete item
      */
     @Override
     public void registerItem(int xCoordinate, int yCoordinate, AbstractItem item) {
@@ -58,15 +58,18 @@ public class Grid extends AbstractGrid{
     }
 
     /**
-     *
+     * Returns the item at location at x and y
+     * Returns null if there is no item at the location
+     * Returns null for out of bounds queries
      * @param xCoordinate the row number
      * @param yCoordinate the column number
-     * @return
+     * @return AbstractItem item at location otherwise null
      */
     @Override
     public AbstractItem getItem(int xCoordinate, int yCoordinate) {
-        // Check if there is an item at location, if T return, else null
-        if (grid[yCoordinate][xCoordinate] instanceof AbstractItem){
+        if((xCoordinate < 0) || (yCoordinate < 0) || (xCoordinate >= getWidth()) || (yCoordinate >= getHeight())){
+            return null;
+        } else if (grid[yCoordinate][xCoordinate] != null){
             return grid[yCoordinate][xCoordinate];
         } else {
             return null;
@@ -74,10 +77,10 @@ public class Grid extends AbstractGrid{
     }
 
     /**
-     *
+     * Returns the stock value at a passed location
      * @param xCoordinate the row number
      * @param yCoordinate the column number
-     * @return
+     * @return int amount of stock at location
      */
     @Override
     public int getStockAt(int xCoordinate, int yCoordinate) {
@@ -86,7 +89,7 @@ public class Grid extends AbstractGrid{
     }
 
     /**
-     *
+     * Clear the stock at a location
      * @param xCoordinate the row number
      * @param yCoordinate the column number
      */
