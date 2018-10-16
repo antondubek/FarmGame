@@ -1,17 +1,23 @@
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Nearest Transporter Class contains methods for a transporter to move stock between the closest farmer and
+ * consumer to it. If there are two farmers or two consumers equidistant then it will move nothing.
+ **/
 public class NearestTransporter extends Transporter {
     private int capacity;
-    private List<AbstractItem> farmers;
-    private List<AbstractItem> consumers;
-    private List<Integer> farmerScores;
-    private List<Integer> consumerScores;
     private int farmerIndex;
-    private int consumerIndex;
-    private AbstractItem nearestFarmer;
-    private AbstractItem nearestConsumer;
 
+    /**
+     *Horizontal Transporter Constructor
+     * Sets local parameters of x, y, grid and capacity
+     * Registers the item into the grid
+     * @param grid Grid grid which the object needs to belong to and be put into
+     * @param yCoordinate int Y coordinate of where the item is to be on the grid
+     * @param xCoordinate int x coordinate of where the item is to be on the grid
+     * @param capacity int the amount of stock (in nutrition) that the transporter can move per timestep
+     */
     public NearestTransporter(Grid grid, int yCoordinate, int xCoordinate, int capacity){
         this.grid = grid;
         this.xCoordinate = xCoordinate;
@@ -21,30 +27,39 @@ public class NearestTransporter extends Transporter {
         grid.registerItem(xCoordinate,yCoordinate, this);
     }
 
+    /**
+     * Returns the transporters name to display on the grid.
+     * @return String name
+     */
     @Override
     public String toString() {
         return "NT";
     }
 
+    /**
+     * Transporter gets the closest consumer and farmer using methods below and depending on the
+     * stock levels will transport up to the stock amount between a farmer and consumer.
+     * @param timeStep The current time-step
+     */
     @Override
     public void process(TimeStep timeStep) {
         //collect farmers
-        farmers = getFarmers();
+        List<AbstractItem> farmers = getFarmers();
 
         // collect consumers
-        consumers = getConsumers();
+        List<AbstractItem> consumers = getConsumers();
 
         //score farmers
-        farmerScores = scoreFarmers();
+        List<Integer> farmerScores = scoreObjects(farmers);
 
         //score consumers
-        consumerScores = scoreConsumers();
+        List<Integer> consumerScores = scoreObjects(consumers);
 
         //Get nearest farmer
-        nearestFarmer = getNearestFarmer();
+        AbstractItem nearestFarmer = getNearest(farmers, farmerScores);
 
         //get lowest consumer
-        nearestConsumer = getNearestConsumer();
+        AbstractItem nearestConsumer = getNearest(consumers, consumerScores);
 
         if(nearestFarmer != null && nearestConsumer != null){
             // get the stock level at the farmer locationSystem.out.println("DEBUG: getItem return = " + grid[xCoordinate][yCoordinate]);
@@ -62,13 +77,16 @@ public class NearestTransporter extends Transporter {
                 nearestConsumer.addToStock(farmerStock);
             }
         }
-
     }
 
+    /**
+     * Scans the whole grid looking looking for farmers
+     * @returns List<ArrayList> of farmers within the grid
+     */
     private List<AbstractItem> getFarmers(){
 
         //Create an empty list of farmers
-        farmers = new ArrayList<AbstractItem>();
+        List<AbstractItem> allfarmers = new ArrayList<>();
 
         //Find all the farmers in the grid and add them to the list
         for (int y = 0; y <= (grid.getHeight()-1); y++) {
@@ -76,121 +94,93 @@ public class NearestTransporter extends Transporter {
                 //if item is an item and a farmer, add it to the list
                 AbstractItem farmerItem = grid.getItem(x,y);
                 if(farmerItem instanceof Farmer){
-                    farmers.add(farmerItem);
+                    allfarmers.add(farmerItem);
                 }
             }
         }
-        return farmers;
+        return allfarmers;
     }
 
+    /**
+     * Scans the whole grid looking looking for Consumers
+     * @returns List<ArrayList> of consumers within the grid
+     */
     private List<AbstractItem> getConsumers(){
 
         //Create an empty list of consumers
-        consumers = new ArrayList<AbstractItem>();
+        List<AbstractItem> allConsumers = new ArrayList<>();
 
         for (int y = 0; y <= grid.getHeight()-1; y++) {
             for (int x = 0; x <= grid.getWidth()-1; x++) {
                 //if item is an item and a consumer add it to the list
                 AbstractItem consumerItem = grid.getItem(x,y);
                 if(consumerItem instanceof Consumer) {
-                    consumers.add(consumerItem);
+                    allConsumers.add(consumerItem);
                 }
             }
         }
-        return consumers;
+        return allConsumers;
     }
 
-    private List<Integer> scoreFarmers(){
+    /**
+     * Taking a list of objects within the grid, method will score the objects based on there x and y
+     * coordinates in relation to the transporter. A higher score is further away and a lower score
+     * is closer.
+     * @param objectList A list of abstract items of consumer or farmer from within the grid
+     * @return A list of integers with the corresponding scores in the same location as passed param list
+     */
+    private List<Integer> scoreObjects(List<AbstractItem> objectList){
 
         // Create an empty arraylist of farmer scores
-        farmerScores = new ArrayList<Integer>();
+        List<Integer> scores = new ArrayList<>();
 
         // Get the x and y score (how far they are away from the NT) and add the absolute values together
-        for(AbstractItem farmer : farmers){
+        for(AbstractItem farmer : objectList){
             int xCord = farmer.xCoordinate;
             int yCord = farmer.yCoordinate;
 
             int finalScore = (Math.abs(this.xCoordinate - xCord)) + (Math.abs(this.yCoordinate - yCord));
 
             //Add the score to the list
-            farmerScores.add(finalScore);
+            scores.add(finalScore);
         }
 
-        return farmerScores;
+        return scores;
     }
 
-    private List<Integer> scoreConsumers(){
-
-        // Create an empty arraylist of farmer scores
-        consumerScores = new ArrayList<Integer>();
-
-        // Get the x and y score (how far they are away from the NT) and add the absolute values together
-        for(AbstractItem consumer : consumers){
-            int xCord = consumer.xCoordinate;
-            int yCord = consumer.yCoordinate;
-
-            int finalScore = (Math.abs(this.xCoordinate - xCord)) + (Math.abs(this.yCoordinate - yCord));
-
-            //Add the score to the list
-            consumerScores.add(finalScore);
-        }
-
-        return consumerScores;
-    }
-
-    private AbstractItem getNearestFarmer(){
+    /**
+     * For a list of objects and there corresponding score, will find the object with the lowest score
+     * and ensure that there is no other objects with the same score. Will then return the object if
+     * it has the lowest or return null if another matching score is found.
+     * @param objectList List of objects
+     * @param objectScores List of the corresponding scores
+     * @return AbstractItem with the lowest score or null if 2 of the same score are found
+     */
+    private AbstractItem getNearest(List<AbstractItem> objectList, List<Integer> objectScores){
 
         //get lowest farmer by iterating through and overriding a value
         Integer lowest = Integer.MAX_VALUE;
-        for(int i = 0; i < farmerScores.size(); i++){
-            if(farmerScores.get(i) < lowest){
-                lowest = farmerScores.get(i);
+        for(int i = 0; i < objectScores.size(); i++){
+            if(objectScores.get(i) < lowest){
+                lowest = objectScores.get(i);
                 farmerIndex = i;
             }
         }
 
         // Go through and see if there is anything else with the same score
         int matches = 0;
-        for(Integer scores: farmerScores){
-            if(scores == lowest){
+        for(Integer scores: objectScores){
+            if(scores.equals(lowest)){
                 matches++;
             }
         }
 
         //if matches == 1 ie only one value of that and no ambiguity
         if(matches == 1){
-            nearestFarmer = farmers.get(farmerIndex);
-            return nearestFarmer;
+            return objectList.get(farmerIndex);
         } else {
             return null;
         }
     }
 
-    private AbstractItem getNearestConsumer(){
-
-        //get lowest consumer by iterating through and overriding a value
-        Integer lowest = Integer.MAX_VALUE;
-        for(int i = 0; i < consumerScores.size(); i++){
-            if(consumerScores.get(i) < lowest){
-                lowest = consumerScores.get(i);
-                consumerIndex = i;
-            }
-        }
-
-        // Go through and see if there is anything else with the same score
-        int matches = 0;
-        for(Integer scores: consumerScores){
-            if(scores == lowest){
-                matches++;
-            }
-        }
-
-        //if matches == 1 ie only one value of that and no ambiguity
-        if(matches == 1){
-            nearestConsumer = consumers.get(consumerIndex);
-            return nearestConsumer;
-        } else {
-            return null;
-        }
-    }
 }
