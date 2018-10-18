@@ -63,26 +63,11 @@ public class HorizontalTransporter extends Transporter {
      */
     private void checkLeft(){
         // go left till you find something else
+        boolean found = false;
         for(int x = xCoordinate; x >= 0; x--){
             AbstractItem item = grid.getItem(x, yCoordinate);
-            if(item instanceof Farmer){
-                farmer = item;
-                return;
-            } else if(item instanceof Consumer) {
-                if((item instanceof Hedgehog)){
-                    if(((Hedgehog) item).isAccepting()){
-                        consumer = item;
-                        return;
-                    } else {
-                        consumer = null;
-                        return;
-                    }
-                } else {
-                    consumer = item;
-                    return;
-                }
-            } else {
-                consumer = null;
+            if(!found){
+                found = processFoundItem(item);
             }
         }
     }
@@ -93,26 +78,11 @@ public class HorizontalTransporter extends Transporter {
      * An extra check has been put to check if the hedgehog is currently accepting.
      */
     private void checkRight(){
+        boolean found = false;
         for(int x = xCoordinate; x < grid.getWidth(); x++){
             AbstractItem item = grid.getItem(x, yCoordinate);
-            if(item instanceof Farmer){
-                farmer = item;
-                return;
-            } else if(item instanceof Consumer) {
-                if((item instanceof Hedgehog)){
-                    if(((Hedgehog) item).isAccepting()){
-                        consumer = item;
-                        return;
-                    } else {
-                        consumer = null;
-                        return;
-                    }
-                } else {
-                    consumer = item;
-                    return;
-                }
-            } else {
-                consumer = null;
+            if(!found){
+                found = processFoundItem(item);
             }
         }
     }

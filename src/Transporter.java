@@ -68,5 +68,32 @@ class Transporter extends AbstractItem {
         }
     }
 
+    public boolean processFoundItem(AbstractItem item){
+        if(item instanceof Farmer){
+            farmer = item;
+            return true;
+        } else if(item instanceof Consumer) {
+            if((item instanceof Hedgehog)){
+                if(((Hedgehog) item).isAccepting()){
+                    consumer = item;
+                    return true;
+                } else {
+                    consumer = null;
+                    return true;
+                    }
+            } else {
+                consumer = item;
+                return true;
+            }
+        } else {
+            if(consumer instanceof Hedgehog){
+                consumer = null;
+                return false;
+            } else{
+                return false;
+            }
+        }
+    }
+
 
 }

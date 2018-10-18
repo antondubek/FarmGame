@@ -58,7 +58,6 @@ public class Hedgehog extends Consumer {
             if(freeCorner[0] != null){
                 moveHouse(freeCorner);
                 isAccepting = false;
-                System.out.println("Moving FALSE");
                 moveSuccessful = true;
             }
         } else if (timeStep.getValue() > 11 && moveSuccessful) {

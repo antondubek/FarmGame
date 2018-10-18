@@ -47,8 +47,6 @@ public class VerticalTransporter extends Transporter {
             checkDown();
         }
 
-        System.out.println(farmer);
-        System.out.println(consumer);
         // Check we have found 2 things
         if((farmer != null) && (consumer != null)){
             moveStock(farmer, consumer);
@@ -63,26 +61,11 @@ public class VerticalTransporter extends Transporter {
     private void checkDown(){
         // get the column of transporter (xcord)
         // start at y coord of the transporter and go down to find something
+        boolean found = false;
         for(int y = yCoordinate; y < grid.getHeight(); y++){
             AbstractItem item = grid.getItem(xCoordinate, y);
-            if(item instanceof Farmer){
-                farmer = item;
-                return;
-            } else if(item instanceof Consumer) {
-                if((item instanceof Hedgehog)){
-                    if(((Hedgehog) item).isAccepting()){
-                        consumer = item;
-                        return;
-                    } else {
-                        consumer = null;
-                        return;
-                    }
-                } else {
-                    consumer = item;
-                    return;
-                }
-            } else {
-                consumer = null;
+            if(!found){
+                found = processFoundItem(item);
             }
         }
     }
@@ -94,26 +77,11 @@ public class VerticalTransporter extends Transporter {
      */
     private void checkUp(){
         // go up till you find something else
+        boolean found = false;
         for(int y = yCoordinate; y >= 0; y--){
             AbstractItem item = grid.getItem(xCoordinate, y);
-            if(item instanceof Farmer){
-                farmer = item;
-                return;
-            } else if(item instanceof Consumer) {
-                if((item instanceof Hedgehog)){
-                    if(((Hedgehog) item).isAccepting()){
-                        consumer = item;
-                        return;
-                    } else {
-                        consumer = null;
-                        return;
-                    }
-                } else {
-                    consumer = item;
-                    return;
-                }
-            } else {
-                consumer = null;
+            if(!found){
+                found = processFoundItem(item);
             }
         }
     }

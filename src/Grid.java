@@ -10,7 +10,7 @@ public class Grid extends AbstractGrid{
     private int totalProduction;
     private int totalConsumption;
 
-    public ArrayList<AbstractItem> farmers = new ArrayList<>();
+    private ArrayList<AbstractItem> farmers = new ArrayList<>();
     private ArrayList<AbstractItem> transporters = new ArrayList<>();
     private ArrayList<AbstractItem> consumers = new ArrayList<>();
 
