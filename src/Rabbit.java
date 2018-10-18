@@ -21,7 +21,7 @@ public class Rabbit extends Consumer {
     }
 
     /**
-     * Returns the consumers name to display on the grid
+     * Returns the consumers namBee to display on the grid
      * @return String name(stock level)
      */
     @Override

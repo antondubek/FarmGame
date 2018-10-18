@@ -6,8 +6,9 @@ import java.util.List;
  * consumer to it. If there are two farmers or two consumers equidistant then it will move nothing.
  **/
 public class NearestTransporter extends Transporter {
-    private int capacity;
     private int farmerIndex;
+    private AbstractItem nearestFarmer;
+    private AbstractItem nearestConsumer;
 
     /**
      *Horizontal Transporter Constructor
@@ -38,44 +39,36 @@ public class NearestTransporter extends Transporter {
 
     /**
      * Transporter gets the closest consumer and farmer using methods below and depending on the
-     * stock levels will transport up to the stock amount between a farmer and consumer.
+     * stock levels will transport up to the stock amount between a farmer and consumer. Will run
+     * once and cache the objects so only needs to scan once saving resources.
+     * Check is also conducted at timeStep 12 for hedgehog moving step 11
      * @param timeStep The current time-step
      */
     @Override
     public void process(TimeStep timeStep) {
-        //collect farmers
-        List<AbstractItem> farmers = getFarmers();
 
-        // collect consumers
-        List<AbstractItem> consumers = getConsumers();
+        if(timeStep.getValue() == 1 || timeStep.getValue() == 12) {
+            //collect farmers
+            List<AbstractItem> farmers = getFarmers();
 
-        //score farmers
-        List<Integer> farmerScores = scoreObjects(farmers);
+            // collect consumers
+            List<AbstractItem> consumers = getConsumers();
 
-        //score consumers
-        List<Integer> consumerScores = scoreObjects(consumers);
+            //score farmers
+            List<Integer> farmerScores = scoreObjects(farmers);
 
-        //Get nearest farmer
-        AbstractItem nearestFarmer = getNearest(farmers, farmerScores);
+            //score consumers
+            List<Integer> consumerScores = scoreObjects(consumers);
 
-        //get lowest consumer
-        AbstractItem nearestConsumer = getNearest(consumers, consumerScores);
+            //Get nearest farmer
+            nearestFarmer = getNearest(farmers, farmerScores);
+
+            //get lowest consumer
+            nearestConsumer = getNearest(consumers, consumerScores);
+        }
 
         if(nearestFarmer != null && nearestConsumer != null){
-            // get the stock level at the farmer locationSystem.out.println("DEBUG: getItem return = " + grid[xCoordinate][yCoordinate]);
-            int farmerStock = nearestFarmer.getStock();
-
-            if(farmerStock >= capacity){
-                //Reduce farmer capacity by capacity
-                nearestFarmer.reduceStock(capacity);
-                //Increase consumer capacity
-                nearestConsumer.addToStock(capacity);
-            } else {
-                //reduce farmer stock by amount
-                nearestFarmer.reduceStock(farmerStock);
-                // increase consumer by amount
-                nearestConsumer.addToStock(farmerStock);
-            }
+            moveStock(nearestFarmer, nearestConsumer);
         }
     }
 

@@ -3,7 +3,7 @@
  * consumer either side horizontally of it with nothing blocking.
  **/
 public class HorizontalTransporter extends Transporter {
-    private int capacity;
+
 
     /**
      *Horizontal Transporter Constructor
@@ -33,39 +33,35 @@ public class HorizontalTransporter extends Transporter {
     }
 
     /**
-     * Transporter initially finds the nearest object to its right, then left.
-     * A check is then made for the instance of hedgehog whether it is currently accepting stock
-     * With 2 items found, a check is then carried out to make sure 1 is a farmer and 1 is a consumer
-     * If so, stock is moved from the farmer to the consumer up to the capacity of the transporter
+     * Transporter initially runs the check left and right methods
+     * A check is then carried out to make sure 1 is a farmer and 1 is a consumer
+     * If so, movestock is called
      * Otherwise nothing happens
+     * Check is also conducted at timeStep 12 for hedgehog moving step 11
      * @param timeStep The current time-step
      */
     @Override
     public void process(TimeStep timeStep) {
         // get the row of transporter (xcord)
         // start at x coord of the transporter and go right to find something
-        AbstractItem farmer = null;
-        AbstractItem consumer = null;
-        for(int x = xCoordinate; x < grid.getWidth(); x++){
-            AbstractItem item = grid.getItem(x, yCoordinate);
-            if(item instanceof Farmer){
-                farmer = item;
-                break;
-            } else if(item instanceof Consumer) {
-                if((item instanceof Hedgehog)){
-                    if(((Hedgehog) item).isAccepting()){
-                        consumer = item;
-                        break;
-                    } else {
-                        break;
-                    }
-                } else {
-                    consumer = item;
-                    break;
-                }
-            }
+        if(timeStep.getValue() == 1 || timeStep.getValue() == 12) {
+            checkLeft();
+            checkRight();
         }
 
+        // Check we have found 2 things
+        if((farmer != null) && (consumer != null)){
+            moveStock(farmer, consumer);
+        }
+
+    }
+
+    /**
+     * Takes the transporters position and checks left of the transporter for an AbstractItem
+     * Checks if the item is a farmer or consumer and saves to the class variable
+     * An extra check has been put to check if the hedgehog is currently accepting.
+     */
+    private void checkLeft(){
         // go left till you find something else
         for(int x = xCoordinate; x >= 0; x--){
             AbstractItem item = grid.getItem(x, yCoordinate);
@@ -86,25 +82,33 @@ public class HorizontalTransporter extends Transporter {
                 }
             }
         }
+    }
 
-        // Check we have found 2 things
-        if((farmer != null) && (consumer != null)){
-            // get the stock level at the farmer locationSystem.out.println("DEBUG: getItem return = " + grid[xCoordinate][yCoordinate]);
-            int farmerStock = farmer.getStock();
-
-            if(farmerStock >= capacity){
-                //Reduce farmer capacity by capacity
-                farmer.reduceStock(capacity);
-                //Increase consumer capacity
-                consumer.addToStock(capacity);
-            } else {
-                //reduce farmer stock by amount
-                farmer.reduceStock(farmerStock);
-                // increase consumer by amount
-                consumer.addToStock(farmerStock);
+    /**
+     * Takes the transporters position and checks right of the transporter for an AbstractItem
+     * Checks if the item is a farmer or consumer and saves to the class variable
+     * An extra check has been put to check if the hedgehog is currently accepting.
+     */
+    private void checkRight(){
+        for(int x = xCoordinate; x < grid.getWidth(); x++){
+            AbstractItem item = grid.getItem(x, yCoordinate);
+            if(item instanceof Farmer){
+                farmer = item;
+                break;
+            } else if(item instanceof Consumer) {
+                if((item instanceof Hedgehog)){
+                    if(((Hedgehog) item).isAccepting()){
+                        consumer = item;
+                        break;
+                    } else {
+                        break;
+                    }
+                } else {
+                    consumer = item;
+                    break;
+                }
             }
         }
-
     }
 
 }

@@ -4,7 +4,6 @@
  */
 
 public class VerticalTransporter extends Transporter {
-    private int capacity;
 
     /**
      *Vertical Transporter Constructor
@@ -34,19 +33,34 @@ public class VerticalTransporter extends Transporter {
     }
 
     /**
-     * Transporter initially finds the nearest object below it, then above it.
-     * A check is then made for the instance of hedgehog whether it is currently accepting stock
-     * With 2 items found, a check is then carried out to make sure 1 is a farmer and 1 is a consumer
-     * If so, stock is moved from the farmer to the consumer up to the capacity of the transporter
+     * Transporter initially runs the check left and right methods
+     * A check is then carried out to make sure 1 is a farmer and 1 is a consumer
+     * If so, movestock is called
      * Otherwise nothing happens
+     * Check is also conducted at timeStep 12 for hedgehog moving step 11
      * @param timeStep The current time-step
      */
     @Override
     public void process(TimeStep timeStep) {
+        if(timeStep.getValue() == 1 || timeStep.getValue() == 12) {
+            checkUp();
+            checkDown();
+        }
+
+        // Check we have found 2 things
+        if((farmer != null) && (consumer != null)){
+            moveStock(farmer, consumer);
+        }
+    }
+
+    /**
+     * Takes the transporters position and checks up of the transporter for an AbstractItem
+     * Checks if the item is a farmer or consumer and saves to the class variable
+     * An extra check has been put to check if the hedgehog is currently accepting.
+     */
+    private void checkUp(){
         // get the column of transporter (xcord)
         // start at y coord of the transporter and go down to find something
-        AbstractItem farmer = null;
-        AbstractItem consumer = null;
         for(int y = yCoordinate; y < grid.getHeight(); y++){
             AbstractItem item = grid.getItem(xCoordinate, y);
             if(item instanceof Farmer){
@@ -66,7 +80,14 @@ public class VerticalTransporter extends Transporter {
                 }
             }
         }
+    }
 
+    /**
+     * Takes the transporters position and checks down of the transporter for an AbstractItem
+     * Checks if the item is a farmer or consumer and saves to the class variable
+     * An extra check has been put to check if the hedgehog is currently accepting.
+     */
+    private void checkDown(){
         // go up till you find something else
         for(int y = yCoordinate; y >= 0; y--){
             AbstractItem item = grid.getItem(xCoordinate, y);
@@ -85,27 +106,6 @@ public class VerticalTransporter extends Transporter {
                     consumer = item;
                     break;
                 }
-            }
-        }
-
-        //System.out.println(farmer);
-        //System.out.println(consumer);
-
-        // Check we have found 2 things
-        if((farmer != null) && (consumer != null)){
-            // get the stock level at the farmer locationSystem.out.println("DEBUG: getItem return = " + grid[xCoordinate][yCoordinate]);
-            int farmerStock = farmer.getStock();
-
-            if(farmerStock >= capacity){
-                //Reduce farmer capacity by capacity
-                farmer.reduceStock(capacity);
-                //Increase consumer capacity
-                consumer.addToStock(capacity);
-            } else { ;
-                //reduce farmer stock by amount
-                farmer.reduceStock(farmerStock);
-                // increase consumer by amount
-                consumer.addToStock(farmerStock);
             }
         }
     }

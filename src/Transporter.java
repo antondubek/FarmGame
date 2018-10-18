@@ -5,6 +5,10 @@
  */
 class Transporter extends AbstractItem {
 
+    public int capacity;
+    public AbstractItem farmer;
+    public AbstractItem consumer;
+
 
     /** Empty process class needed to validate as an AbstractItem
      * this is looked after by individual transporter classes
@@ -41,4 +45,28 @@ class Transporter extends AbstractItem {
     protected void reduceStock(int nutrition) {
 
     }
+
+    /**
+     * Takes the stock from a farmer and moves it to a consumer
+     * @param farmer AbstractItem farmer to move from
+     * @param consumer AbstractItem consumer to move to
+     */
+    public void moveStock(AbstractItem farmer, AbstractItem consumer){
+        // get the stock level at the farmer locationSystem.out.println("DEBUG: getItem return = " + grid[xCoordinate][yCoordinate]);
+        int farmerStock = farmer.getStock();
+
+        if(farmerStock >= capacity){
+            //Reduce farmer capacity by capacity
+            farmer.reduceStock(capacity);
+            //Increase consumer capacity
+            consumer.addToStock(capacity);
+        } else { ;
+            //reduce farmer stock by amount
+            farmer.reduceStock(farmerStock);
+            // increase consumer by amount
+            consumer.addToStock(farmerStock);
+        }
+    }
+
+
 }

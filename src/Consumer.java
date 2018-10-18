@@ -22,4 +22,5 @@ class Consumer extends AbstractItem {
         // Rabbit has no stock so stock reduced to 0 when finished consuming
         this.grid.reduceStockAt(xCoordinate, yCoordinate, nutrition);
     }
+
 }

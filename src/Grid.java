@@ -1,3 +1,6 @@
+import java.sql.Time;
+import java.util.ArrayList;
+
 /**
  * Grid class contains methods to manipulate and retrieve items and values within the grid and stock
  */
@@ -7,6 +10,10 @@ public class Grid extends AbstractGrid{
     private int height;
     private int totalProduction;
     private int totalConsumption;
+
+    private ArrayList<AbstractItem> farmers = new ArrayList<>();
+    private ArrayList<AbstractItem> transporters = new ArrayList<>();
+    private ArrayList<AbstractItem> consumers = new ArrayList<>();
 
     /**
      * Grid constructor
@@ -136,46 +143,28 @@ public class Grid extends AbstractGrid{
     }
 
     /**
-     *Iterates through the whole grid left to right, top to bottom, running the process methods of farmers first,
-     *  then transporters and finally consumers
+     * For the first step, will run methods to save the objects in the grid. Otherwise will run the process methods
+     * of each farmer, then each transporter and then each consumer.
      * @param timeStep The time step we are at. This value may be used to determine production frequency of farmers.
      */
     @Override
     public void processItems(TimeStep timeStep) {
 
-        //For farmers
-        for (int y = 0; y <= (getHeight()-1); y++) {
-            for (int x = 0; x <= getWidth()-1; x++) {
-                //if item is an item and a radish farmer
-                AbstractItem farmerItem = getItem(x,y);
-                if(farmerItem instanceof Farmer){
-                    farmerItem.process(timeStep);
-                }
-            }
+        if(timeStep.getValue() == 1){
+            scanForFarmers();
+            scanForTransporters();
+            scanForConsumers();
+        }
+        for(AbstractItem item: farmers){
+            item.process(timeStep);
+        }
+        for(AbstractItem item: transporters){
+            item.process(timeStep);
+        }
+        for(AbstractItem item: consumers){
+            item.process(timeStep);
         }
 
-        //For transporters
-        for (int y = 0; y <= getHeight()-1; y++) {
-            for (int x = 0; x <= getWidth()-1; x++) {
-                //if item is an item is a transporter
-                AbstractItem transporterItem = getItem(x,y);
-                if(transporterItem instanceof Transporter){
-                    transporterItem.process(timeStep);
-                }
-            }
-        }
-
-
-        //For consumers
-        for (int y = 0; y <= getHeight()-1; y++) {
-            for (int x = 0; x <= getWidth()-1; x++) {
-                //if item is an item and a consumer
-                AbstractItem consumerItem = getItem(x,y);
-                if(((consumerItem instanceof Rabbit) || (consumerItem instanceof  Beaver) || (consumerItem instanceof Hedgehog))) {
-                    consumerItem.process(timeStep);
-                }
-            }
-        }
     }
 
     /**
@@ -212,6 +201,53 @@ public class Grid extends AbstractGrid{
     @Override
     public int getTotalConsumption() {
         return totalConsumption;
+    }
+
+    /**
+     * Iterates through the whole grid, left to right, top to bottom and saves the farmers into an arraylist
+     */
+    private void scanForFarmers(){
+        for (int y = 0; y <= (getHeight()-1); y++) {
+            for (int x = 0; x <= getWidth()-1; x++) {
+                //if item is an item and a farmer
+                AbstractItem farmerItem = getItem(x,y);
+                if(farmerItem instanceof Farmer){
+                    farmers.add(farmerItem);
+                }
+            }
+        }
+    }
+
+    /**
+     * Iterates through the whole grid, left to right, top to bottom and saves the farmers into an arraylist
+     */
+    private void scanForTransporters(){
+        //For transporters
+        for (int y = 0; y <= getHeight()-1; y++) {
+            for (int x = 0; x <= getWidth()-1; x++) {
+                //if item is an item is a transporter
+                AbstractItem transporterItem = getItem(x,y);
+                if(transporterItem instanceof Transporter){
+                    transporters.add(transporterItem);
+                }
+            }
+        }
+    }
+
+    /**
+     * Iterates through the whole grid, left to right, top to bottom and saves the farmers into an arraylist
+     */
+    private void scanForConsumers(){
+        //For consumers
+        for (int y = 0; y <= getHeight()-1; y++) {
+            for (int x = 0; x <= getWidth()-1; x++) {
+                //if item is an item and a consumer
+                AbstractItem consumerItem = getItem(x,y);
+                if(consumerItem instanceof Consumer) {
+                    consumers.add(consumerItem);
+                }
+            }
+        }
     }
 
 
