@@ -67,19 +67,22 @@ public class HorizontalTransporter extends Transporter {
             AbstractItem item = grid.getItem(x, yCoordinate);
             if(item instanceof Farmer){
                 farmer = item;
-                break;
+                return;
             } else if(item instanceof Consumer) {
                 if((item instanceof Hedgehog)){
                     if(((Hedgehog) item).isAccepting()){
                         consumer = item;
-                        break;
+                        return;
                     } else {
-                        break;
+                        consumer = null;
+                        return;
                     }
                 } else {
                     consumer = item;
-                    break;
+                    return;
                 }
+            } else {
+                consumer = null;
             }
         }
     }
@@ -94,19 +97,22 @@ public class HorizontalTransporter extends Transporter {
             AbstractItem item = grid.getItem(x, yCoordinate);
             if(item instanceof Farmer){
                 farmer = item;
-                break;
+                return;
             } else if(item instanceof Consumer) {
                 if((item instanceof Hedgehog)){
                     if(((Hedgehog) item).isAccepting()){
                         consumer = item;
-                        break;
+                        return;
                     } else {
-                        break;
+                        consumer = null;
+                        return;
                     }
                 } else {
                     consumer = item;
-                    break;
+                    return;
                 }
+            } else {
+                consumer = null;
             }
         }
     }

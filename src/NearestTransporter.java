@@ -74,7 +74,7 @@ public class NearestTransporter extends Transporter {
 
     /**
      * Scans the whole grid looking looking for farmers
-     * @returns List<ArrayList> of farmers within the grid
+     * @returns List<AbstractItem> of farmers within the grid
      */
     private List<AbstractItem> getFarmers(){
 

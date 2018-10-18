@@ -47,38 +47,11 @@ public class VerticalTransporter extends Transporter {
             checkDown();
         }
 
+        System.out.println(farmer);
+        System.out.println(consumer);
         // Check we have found 2 things
         if((farmer != null) && (consumer != null)){
             moveStock(farmer, consumer);
-        }
-    }
-
-    /**
-     * Takes the transporters position and checks up of the transporter for an AbstractItem
-     * Checks if the item is a farmer or consumer and saves to the class variable
-     * An extra check has been put to check if the hedgehog is currently accepting.
-     */
-    private void checkUp(){
-        // get the column of transporter (xcord)
-        // start at y coord of the transporter and go down to find something
-        for(int y = yCoordinate; y < grid.getHeight(); y++){
-            AbstractItem item = grid.getItem(xCoordinate, y);
-            if(item instanceof Farmer){
-                farmer = item;
-                break;
-            } else if(item instanceof Consumer) {
-                if((item instanceof Hedgehog)){
-                    if(((Hedgehog) item).isAccepting()){
-                        consumer = item;
-                        break;
-                    } else {
-                        break;
-                    }
-                } else {
-                    consumer = item;
-                    break;
-                }
-            }
         }
     }
 
@@ -88,26 +61,65 @@ public class VerticalTransporter extends Transporter {
      * An extra check has been put to check if the hedgehog is currently accepting.
      */
     private void checkDown(){
+        // get the column of transporter (xcord)
+        // start at y coord of the transporter and go down to find something
+        for(int y = yCoordinate; y < grid.getHeight(); y++){
+            AbstractItem item = grid.getItem(xCoordinate, y);
+            if(item instanceof Farmer){
+                farmer = item;
+                return;
+            } else if(item instanceof Consumer) {
+                if((item instanceof Hedgehog)){
+                    if(((Hedgehog) item).isAccepting()){
+                        consumer = item;
+                        return;
+                    } else {
+                        consumer = null;
+                        return;
+                    }
+                } else {
+                    consumer = item;
+                    return;
+                }
+            } else {
+                consumer = null;
+            }
+        }
+    }
+
+    /**
+     * Takes the transporters position and checks up of the transporter for an AbstractItem
+     * Checks if the item is a farmer or consumer and saves to the class variable
+     * An extra check has been put to check if the hedgehog is currently accepting.
+     */
+    private void checkUp(){
         // go up till you find something else
         for(int y = yCoordinate; y >= 0; y--){
             AbstractItem item = grid.getItem(xCoordinate, y);
             if(item instanceof Farmer){
                 farmer = item;
-                break;
+                return;
             } else if(item instanceof Consumer) {
                 if((item instanceof Hedgehog)){
                     if(((Hedgehog) item).isAccepting()){
                         consumer = item;
-                        break;
+                        return;
                     } else {
-                        break;
+                        consumer = null;
+                        return;
                     }
                 } else {
                     consumer = item;
-                    break;
+                    return;
                 }
+            } else {
+                consumer = null;
             }
         }
     }
+
+    //private boolean hedgehogOkay(AbstractItem item){
+
+    //}
 
 }

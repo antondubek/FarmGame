@@ -1,4 +1,3 @@
-import java.sql.Time;
 import java.util.ArrayList;
 
 /**
@@ -11,7 +10,7 @@ public class Grid extends AbstractGrid{
     private int totalProduction;
     private int totalConsumption;
 
-    private ArrayList<AbstractItem> farmers = new ArrayList<>();
+    public ArrayList<AbstractItem> farmers = new ArrayList<>();
     private ArrayList<AbstractItem> transporters = new ArrayList<>();
     private ArrayList<AbstractItem> consumers = new ArrayList<>();
 
@@ -249,6 +248,5 @@ public class Grid extends AbstractGrid{
             }
         }
     }
-
 
 }

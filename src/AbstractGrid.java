@@ -1,5 +1,3 @@
-import java.sql.SQLOutput;
-
 /**
  * The AbstractGrid class contains abstract methods to capture the required functionality for a Grid implementation.
  */
@@ -180,5 +178,6 @@ abstract class AbstractGrid {
         }
         return out;
     }
+
 
 }
