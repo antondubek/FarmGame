@@ -25,7 +25,6 @@ public class Hedgehog extends Consumer {
         grid.registerItem(xCoordinate, yCoordinate, this);
     }
 
-
     /**
      * Returns the consumers name to display on the grid
      * @return String name(stock level)

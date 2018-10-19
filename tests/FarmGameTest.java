@@ -102,6 +102,9 @@ public class FarmGameTest {
         assertEquals(check[1].intValue(), 0);
     }
 
+    /**
+     * Checks that the hedgehog will not move if all corners are taken
+     */
     @Test
     public void allCornersTaken(){
         Grid grid = new Grid(4, 4);
@@ -146,6 +149,9 @@ public class FarmGameTest {
     }
 
 
+    /**
+     * Checks that if the hedgehog successfully moves, then it consumes at the correct rate
+     */
     @Test
     public void successfulMove(){
         Grid grid = new Grid(4, 4);
@@ -156,10 +162,40 @@ public class FarmGameTest {
         Game game = new Game(grid);
         game.run(20);
 
-        //Corn produces 5 per turn so 50 by turn 10
+        //Corn produces 25 per 4 turns so 50 by turn 10
         //Hedgehog consumes 2 per turn for turn 12-20 = 18
         // TotalConsumption = 18
         assertEquals(18, grid.getTotalConsumption());
+    }
+
+    /**
+     * Checks that a transporter will successfully latch onto an object that the hedgehog was blocking after
+     * the hedgehog successfully moves.
+     */
+    @Test
+    public void successfulLatch(){
+        Grid grid = new Grid(4, 4);
+        CornFarmer corn = new CornFarmer(grid, 2, 0);
+        HorizontalTransporter HT = new HorizontalTransporter(grid, 2, 1, 30);
+        Hedgehog hedgy = new Hedgehog(grid, 2, 2);
+        Rabbit rabbit = new Rabbit(grid, 2, 3);
+
+        Game game = new Game(grid);
+        game.run(20);
+
+        // Note Transporter capacity increased to 30 for ease of calculation
+        // Hedgehog
+        //Corn produces 25 per 4 turns so 50 by turn 10
+        //Hedgehog consumes 2 per turn for turn 12-20 = 18
+        // TotalConsumption = 18
+
+        //Rabbit
+        // Corn produces 25 on turn 12, 16, 20 = 75
+        // Rabbit can eat 8 per turn saving none
+        // So eats 8 on turns 12,16 and 20 = 24
+
+        // 24+18 = 42
+        assertEquals(42, grid.getTotalConsumption());
     }
 
 
