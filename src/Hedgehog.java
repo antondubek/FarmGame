@@ -74,7 +74,7 @@ public class Hedgehog extends Consumer {
      * if there is on or an empty Integer[]
      * @return Integer[] If found Integer[xCord, yCord] or empty if none found
      */
-    private Integer[] checkCorners(){
+    public Integer[] checkCorners(){
         int stock = getStock();
         Integer[] coords = new Integer[2];
         //check for free corners
