@@ -59,7 +59,7 @@ public class HorizontalTransporter extends Transporter {
     /**
      * Takes the transporters position and checks left of the transporter for an AbstractItem
      * Checks if the item is a farmer or consumer and saves to the class variable
-     * An extra check has been put to check if the hedgehog is currently accepting.
+     *
      */
     private void checkLeft(){
         // go left till you find something else
@@ -75,7 +75,7 @@ public class HorizontalTransporter extends Transporter {
     /**
      * Takes the transporters position and checks right of the transporter for an AbstractItem
      * Checks if the item is a farmer or consumer and saves to the class variable
-     * An extra check has been put to check if the hedgehog is currently accepting.
+     *
      */
     private void checkRight(){
         boolean found = false;

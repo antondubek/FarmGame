@@ -68,6 +68,13 @@ class Transporter extends AbstractItem {
         }
     }
 
+    /**
+     * Takes a found item and checks if it is a farmer or consumer before then saving it
+     * An extra check has been put to check if the hedgehog is currently accepting and also to remove the
+     * hedgehog from the transporters connection if it is still attached when it has moved.
+     * @param item AbstractItem object found
+     * @return boolean true if it found something, false if it didn't.
+     */
     public boolean processFoundItem(AbstractItem item){
         if(item instanceof Farmer){
             farmer = item;

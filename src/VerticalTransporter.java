@@ -56,7 +56,7 @@ public class VerticalTransporter extends Transporter {
     /**
      * Takes the transporters position and checks down of the transporter for an AbstractItem
      * Checks if the item is a farmer or consumer and saves to the class variable
-     * An extra check has been put to check if the hedgehog is currently accepting.
+     *
      */
     private void checkDown(){
         // get the column of transporter (xcord)
@@ -73,7 +73,7 @@ public class VerticalTransporter extends Transporter {
     /**
      * Takes the transporters position and checks up of the transporter for an AbstractItem
      * Checks if the item is a farmer or consumer and saves to the class variable
-     * An extra check has been put to check if the hedgehog is currently accepting.
+     *
      */
     private void checkUp(){
         // go up till you find something else
@@ -86,8 +86,5 @@ public class VerticalTransporter extends Transporter {
         }
     }
 
-    //private boolean hedgehogOkay(AbstractItem item){
-
-    //}
 
 }
